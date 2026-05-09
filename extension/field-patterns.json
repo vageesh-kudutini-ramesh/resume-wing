@@ -1,0 +1,259 @@
+{
+  "_version": "1.0.0",
+  "_updated": "2026-05-07",
+  "_instructions": [
+    "This is the remote pattern library for ResumeWing's universal form classifier.",
+    "Host at: https://raw.githubusercontent.com/YOUR_USERNAME/resume-wing/main/extension/field-patterns.json",
+    "Each key is a field_key that maps to profile data.",
+    "Each entry has an 'autocomplete' list (HTML5 standard values) and a 'patterns' list (regex strings).",
+    "Add new patterns here when you encounter field labels not yet covered.",
+    "Changes deploy instantly to all users — no reinstall needed.",
+    "",
+    "Pattern syntax: standard JavaScript regex strings (without / delimiters).",
+    "The classifier tests each pattern with the 'i' (case-insensitive) flag."
+  ],
+
+  "first_name": {
+    "autocomplete": ["given-name", "first-name"],
+    "patterns": [
+      "\\bfirst[\\s_\\-.]?name\\b",
+      "\\bgiven[\\s_\\-.]?name\\b",
+      "\\bfname\\b",
+      "\\bforename\\b",
+      "\\blegal[\\s_\\-.]?first\\b",
+      "\\bapplicant[\\s_\\-.]?first\\b"
+    ]
+  },
+
+  "last_name": {
+    "autocomplete": ["family-name", "last-name"],
+    "patterns": [
+      "\\blast[\\s_\\-.]?name\\b",
+      "\\bfamily[\\s_\\-.]?name\\b",
+      "\\bsurname\\b",
+      "\\blname\\b",
+      "\\bapplicant[\\s_\\-.]?last\\b"
+    ]
+  },
+
+  "full_name": {
+    "autocomplete": ["name"],
+    "patterns": [
+      "^name$",
+      "\\bfull[\\s_\\-.]?name\\b",
+      "\\byour[\\s_\\-.]?name\\b",
+      "\\blegal[\\s_\\-.]?name\\b",
+      "\\bcomplete[\\s_\\-.]?name\\b"
+    ]
+  },
+
+  "email": {
+    "type": ["email"],
+    "autocomplete": ["email"],
+    "patterns": [
+      "\\bemail\\b",
+      "\\be[\\s\\-]?mail\\b",
+      "\\bemail[\\s_\\-.]?address\\b"
+    ]
+  },
+
+  "phone": {
+    "type": ["tel"],
+    "autocomplete": ["tel", "mobile", "phone"],
+    "patterns": [
+      "\\bphone\\b",
+      "\\bmobile\\b",
+      "\\bcell\\b",
+      "\\btelephone\\b",
+      "\\bphone[\\s_\\-.]?number\\b",
+      "\\bcontact[\\s_\\-.]?number\\b",
+      "\\bph[\\s_\\-.]?no\\b"
+    ]
+  },
+
+  "linkedin": {
+    "patterns": [
+      "\\blinkedin\\b",
+      "linkedin\\.com"
+    ]
+  },
+
+  "github": {
+    "patterns": [
+      "\\bgithub\\b",
+      "github\\.com"
+    ]
+  },
+
+  "portfolio": {
+    "autocomplete": ["url"],
+    "patterns": [
+      "\\bportfolio\\b",
+      "\\bpersonal[\\s_\\-.]?site\\b",
+      "\\bpersonal[\\s_\\-.]?website\\b",
+      "\\bwebsite\\b",
+      "\\bhomepage\\b"
+    ]
+  },
+
+  "city": {
+    "autocomplete": ["address-level2"],
+    "patterns": [
+      "^city$",
+      "\\bcity[\\s_\\-.]?of\\b",
+      "\\btown\\b",
+      "\\bcity[\\s_\\-.]?name\\b",
+      "\\bcurrent[\\s_\\-.]?city\\b"
+    ]
+  },
+
+  "state": {
+    "autocomplete": ["address-level1"],
+    "patterns": [
+      "^state$",
+      "\\bstate[\\/]province\\b",
+      "\\bprovince\\b",
+      "\\bregion\\b"
+    ]
+  },
+
+  "zip": {
+    "autocomplete": ["postal-code"],
+    "patterns": [
+      "\\bzip\\b",
+      "\\bpostal[\\s_\\-.]?code\\b",
+      "\\bpost[\\s_\\-.]?code\\b",
+      "\\bpin[\\s_\\-.]?code\\b"
+    ]
+  },
+
+  "country": {
+    "autocomplete": ["country", "country-name"],
+    "patterns": [
+      "^country$",
+      "\\bcountry[\\s_\\-.]?of[\\s_\\-.]?residence\\b",
+      "\\bnationality\\b"
+    ]
+  },
+
+  "current_company": {
+    "autocomplete": ["organization"],
+    "patterns": [
+      "\\bcurrent[\\s_\\-.]?company\\b",
+      "\\bcurrent[\\s_\\-.]?employer\\b",
+      "\\bemployer\\b",
+      "^company$",
+      "^organization$",
+      "^org$",
+      "\\bcompany[\\s_\\-.]?name\\b"
+    ]
+  },
+
+  "job_title": {
+    "autocomplete": ["organization-title"],
+    "patterns": [
+      "\\bcurrent[\\s_\\-.]?title\\b",
+      "\\bjob[\\s_\\-.]?title\\b",
+      "\\bcurrent[\\s_\\-.]?role\\b",
+      "\\bdesignation\\b",
+      "^title$"
+    ]
+  },
+
+  "years_experience": {
+    "patterns": [
+      "\\byears[\\s_\\-.]?of[\\s_\\-.]?experience\\b",
+      "\\byears[\\s_\\-.]?experience\\b",
+      "\\bhow[\\s_\\-.]?many[\\s_\\-.]?years\\b",
+      "\\btotal[\\s_\\-.]?experience\\b"
+    ]
+  },
+
+  "expected_salary": {
+    "patterns": [
+      "\\bsalary[\\s_\\-.]?expectation\\b",
+      "\\bexpected[\\s_\\-.]?salary\\b",
+      "\\bdesired[\\s_\\-.]?salary\\b",
+      "\\bcompensation\\b",
+      "\\bctc\\b",
+      "\\bexpected[\\s_\\-.]?ctc\\b"
+    ]
+  },
+
+  "notice_period": {
+    "patterns": [
+      "\\bnotice[\\s_\\-.]?period\\b",
+      "\\bweeks[\\s_\\-.]?notice\\b",
+      "\\bdays[\\s_\\-.]?notice\\b"
+    ]
+  },
+
+  "work_authorization": {
+    "patterns": [
+      "\\bwork[\\s_\\-.]?auth",
+      "\\bauthorized[\\s_\\-.]?to[\\s_\\-.]?work\\b",
+      "\\beligible[\\s_\\-.]?to[\\s_\\-.]?work\\b",
+      "\\bright[\\s_\\-.]?to[\\s_\\-.]?work\\b",
+      "\\bvisa[\\s_\\-.]?sponsorship\\b",
+      "\\bwork[\\s_\\-.]?permit\\b",
+      "\\bcitizenship\\b"
+    ]
+  },
+
+  "cover_letter": {
+    "patterns": [
+      "\\bcover[\\s_\\-.]?letter\\b",
+      "\\bmotivation[\\s_\\-.]?letter\\b",
+      "\\bwhy[\\s_\\-.]?do[\\s_\\-.]?you[\\s_\\-.]?want\\b",
+      "\\btell[\\s_\\-.]?us[\\s_\\-.]?about\\b",
+      "\\badditional[\\s_\\-.]?information\\b",
+      "\\bintroduce[\\s_\\-.]?yourself\\b"
+    ]
+  },
+
+  "school": {
+    "patterns": [
+      "\\bschool\\b",
+      "\\buniversity\\b",
+      "\\bcollege\\b",
+      "\\binstitution\\b",
+      "\\balma[\\s_\\-.]?mater\\b"
+    ]
+  },
+
+  "degree": {
+    "patterns": [
+      "\\bdegree\\b",
+      "\\bhighest[\\s_\\-.]?degree\\b",
+      "\\blevel[\\s_\\-.]?of[\\s_\\-.]?education\\b",
+      "\\bqualification\\b"
+    ]
+  },
+
+  "major": {
+    "patterns": [
+      "\\bmajor\\b",
+      "\\bfield[\\s_\\-.]?of[\\s_\\-.]?study\\b",
+      "\\bconcentration\\b",
+      "\\bspecialization\\b"
+    ]
+  },
+
+  "graduation_year": {
+    "patterns": [
+      "\\bgraduation[\\s_\\-.]?year\\b",
+      "\\byear[\\s_\\-.]?of[\\s_\\-.]?graduation\\b",
+      "\\bgraduated\\b",
+      "\\bpass[\\s_\\-.]?out[\\s_\\-.]?year\\b"
+    ]
+  },
+
+  "how_did_you_hear": {
+    "patterns": [
+      "\\bhow[\\s_\\-.]?did[\\s_\\-.]?you[\\s_\\-.]?hear\\b",
+      "\\breferred[\\s_\\-.]?by\\b",
+      "\\breferral\\b",
+      "\\bdiscover[\\s_\\-.]?us\\b"
+    ]
+  }
+}

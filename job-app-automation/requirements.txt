@@ -1,0 +1,21 @@
+# ── FastAPI Backend ─────────────────────────────────────────────────────────────
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+python-multipart>=0.0.9          # required for file uploads in FastAPI
+
+# ── Resume parsing ──────────────────────────────────────────────────────────────
+PyMuPDF>=1.23.0
+pdfplumber>=0.10.0
+python-docx>=1.1.0
+
+# ── Job board APIs ──────────────────────────────────────────────────────────────
+requests>=2.31.0
+
+# ── AI matching & NLP ──────────────────────────────────────────────────────────
+sentence-transformers>=2.7.0      # semantic similarity
+keybert>=0.8.4                    # BERT-based keyword extraction for ATS
+# spacy>=3.7.0                    # optional: NER-based skill extraction
+#   python -m spacy download en_core_web_sm
+
+# ── Config ──────────────────────────────────────────────────────────────────────
+python-dotenv>=1.0.0

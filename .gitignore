@@ -1,0 +1,98 @@
+# ─── Secrets & credentials ─────────────────────────────────────────────────────
+# These contain API keys, OAuth tokens, or other private values and MUST never
+# be committed. .env.example IS committed so users know what variables to set.
+.env
+.env.*
+!.env.example
+*.env.local
+credentials.json
+*credentials*.json
+client_secret*.json
+token.json
+*.token
+*.pem
+*.key
+*.crt
+
+
+# ─── User data (PII) ───────────────────────────────────────────────────────────
+# These hold the user's resume content + applied-job history. Each user
+# generates their own from a fresh install.
+job-app-automation/uploads/
+job-app-automation/data/
+*.db
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+
+
+# ─── Python ────────────────────────────────────────────────────────────────────
+# Virtual environment, byte-code, build artefacts, test caches.
+venv/
+.venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+*.egg-info/
+*.egg
+.pytest_cache/
+.tox/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+
+# ─── Node / Next.js ────────────────────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+.yarn/install-state.gz
+.next/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+
+
+# ─── Editor & OS ───────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
+# ─── Logs & temp ───────────────────────────────────────────────────────────────
+*.log
+.logs/
+*.pid
+*.tmp
+.cache/
+.parcel-cache/
+
+
+# ─── Claude / agent state ──────────────────────────────────────────────────────
+# Claude Code per-project state (memory, settings) lives here for the
+# developer. Don't ship someone else's editor history.
+.claude/
+.claude-context/
+.aider*
+
+
+# ─── Reference docs that shouldn't be public ──────────────────────────────────
+# The original project-reference docx contains private design notes.
+JobAppAutomation_ProjectReference.docx

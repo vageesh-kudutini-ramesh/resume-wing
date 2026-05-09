@@ -1,0 +1,14 @@
+# Force Unix line endings (LF) for shell scripts on all operating systems.
+# Without this, Git on Windows will save .sh files with CRLF endings,
+# which causes macOS/Linux to fail with "bad interpreter: No such file or directory".
+
+*.sh    text eol=lf
+*.bat   text eol=crlf
+*.py    text eol=lf
+*.ts    text eol=lf
+*.tsx   text eol=lf
+*.js    text eol=lf
+*.json  text eol=lf
+*.css   text eol=lf
+*.md    text eol=lf
+*.env   text eol=lf

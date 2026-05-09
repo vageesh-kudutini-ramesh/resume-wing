@@ -1,0 +1,240 @@
+{
+  "_version": "1.0.0",
+  "_updated": "2026-05-07",
+  "_instructions": [
+    "This file is the remote selector config for ResumeWing Autofill.",
+    "Host it at: https://raw.githubusercontent.com/YOUR_USERNAME/resume-wing/main/extension/ats-selectors.json",
+    "When an ATS platform changes its HTML (field IDs, data attributes),",
+    "just update the matching selector list here and push to GitHub.",
+    "Every user's extension picks up the fix automatically on next load.",
+    "No reinstall or Chrome Web Store review required.",
+    "",
+    "Format: { 'ats_name_lowercase': { 'field_key': ['selector1', 'selector2', ...] } }",
+    "Selectors are tried in priority order (first match wins).",
+    "For Workday fields, prefix selectors with 'wd:' to use data-automation-id lookup.",
+    "Remote selectors are MERGED with (and take priority over) the built-in defaults."
+  ],
+
+  "greenhouse": {
+    "first_name": [
+      "#first_name",
+      "input[name='first_name']",
+      "input[autocomplete='given-name']",
+      "input[placeholder*='First name' i]"
+    ],
+    "last_name": [
+      "#last_name",
+      "input[name='last_name']",
+      "input[autocomplete='family-name']",
+      "input[placeholder*='Last name' i]"
+    ],
+    "email": [
+      "#email",
+      "input[name='email']",
+      "input[type='email']"
+    ],
+    "phone": [
+      "#phone",
+      "input[name='phone']",
+      "input[type='tel']",
+      "input[placeholder*='Phone' i]"
+    ],
+    "linkedin": [
+      "input[id*='linkedin' i]",
+      "input[placeholder*='LinkedIn' i]",
+      "input[name*='linkedin' i]"
+    ],
+    "github": [
+      "input[id*='github' i]",
+      "input[placeholder*='GitHub' i]"
+    ],
+    "portfolio": [
+      "input[id*='portfolio' i]",
+      "input[id*='website' i]",
+      "input[placeholder*='portfolio' i]",
+      "input[placeholder*='website' i]"
+    ],
+    "location": [
+      "input[id*='location' i]",
+      "input[placeholder*='Location' i]",
+      "input[placeholder*='City' i]"
+    ],
+    "current_company": [
+      "input[id*='company' i]",
+      "input[placeholder*='Current company' i]"
+    ]
+  },
+
+  "lever": {
+    "full_name": [
+      "input[name='name']",
+      ".application-name input",
+      "input[autocomplete='name']",
+      "input[placeholder*='Full name' i]"
+    ],
+    "first_name": [
+      "input[name='first_name']",
+      "input[placeholder*='First name' i]"
+    ],
+    "last_name": [
+      "input[name='last_name']",
+      "input[placeholder*='Last name' i]"
+    ],
+    "email": [
+      "input[name='email']",
+      "input[type='email']"
+    ],
+    "phone": [
+      "input[name='phone']",
+      "input[type='tel']"
+    ],
+    "current_company": [
+      "input[name='org']",
+      "input[placeholder*='company' i]"
+    ],
+    "linkedin": [
+      "input[name='urls[LinkedIn]']",
+      "input[placeholder*='LinkedIn' i]"
+    ],
+    "github": [
+      "input[name='urls[GitHub]']",
+      "input[placeholder*='GitHub' i]"
+    ],
+    "portfolio": [
+      "input[name='urls[Portfolio]']",
+      "input[name='urls[Other]']",
+      "input[placeholder*='portfolio' i]"
+    ],
+    "location": [
+      "input[name='location']",
+      "input[placeholder*='Location' i]"
+    ]
+  },
+
+  "workday": {
+    "first_name": [
+      "wd:legalNameSection_firstName",
+      "wd:firstName",
+      "[aria-label*='First Name' i] input",
+      "input[data-automation-id='firstName']"
+    ],
+    "last_name": [
+      "wd:legalNameSection_lastName",
+      "wd:lastName",
+      "[aria-label*='Last Name' i] input",
+      "input[data-automation-id='lastName']"
+    ],
+    "middle_name": [
+      "wd:legalNameSection_middleName",
+      "wd:middleName"
+    ],
+    "email": [
+      "wd:email",
+      "[data-automation-id='email'] input",
+      "[aria-label*='Email' i] input",
+      "input[type='email']"
+    ],
+    "phone": [
+      "wd:phone",
+      "[data-automation-id='phone'] input",
+      "[aria-label*='Phone' i] input",
+      "input[type='tel']"
+    ],
+    "city": [
+      "wd:addressSection_city",
+      "wd:city",
+      "[data-automation-id='city'] input"
+    ],
+    "zip": [
+      "wd:addressSection_postalCode",
+      "wd:postalCode",
+      "[data-automation-id='postalCode'] input"
+    ],
+    "linkedin": [
+      "wd:linkedIn",
+      "[data-automation-id='linkedIn'] input",
+      "[aria-label*='LinkedIn' i] input"
+    ]
+  },
+
+  "smartrecruiters": {
+    "first_name": [
+      "input[name='firstName']",
+      "[data-testid='firstName'] input",
+      "[data-testid='firstName']",
+      "input[id*='firstName' i]",
+      "input[placeholder*='First name' i]"
+    ],
+    "last_name": [
+      "input[name='lastName']",
+      "[data-testid='lastName'] input",
+      "[data-testid='lastName']",
+      "input[id*='lastName' i]",
+      "input[placeholder*='Last name' i]"
+    ],
+    "email": [
+      "input[name='email']",
+      "[data-testid='email'] input",
+      "input[type='email']"
+    ],
+    "phone": [
+      "input[name='phoneNumber']",
+      "[data-testid='phoneNumber'] input",
+      "input[type='tel']"
+    ],
+    "linkedin": [
+      "input[name='web.LinkedIn']",
+      "[data-testid='LinkedInUrl'] input",
+      "input[placeholder*='LinkedIn' i]"
+    ],
+    "github": [
+      "input[name='web.GitHub']",
+      "input[placeholder*='GitHub' i]"
+    ],
+    "portfolio": [
+      "input[name='web.Portfolio']",
+      "input[name='web.Website']",
+      "input[placeholder*='portfolio' i]"
+    ]
+  },
+
+  "ashby": {
+    "full_name": [
+      "input[data-testid='name-input']",
+      "input[name='name']",
+      "input[placeholder*='Full name' i]",
+      "input[placeholder*='Your name' i]"
+    ],
+    "email": [
+      "input[data-testid='email-input']",
+      "input[name='email']",
+      "input[type='email']"
+    ],
+    "phone": [
+      "input[data-testid='phone-input']",
+      "input[name='phone']",
+      "input[type='tel']"
+    ],
+    "location": [
+      "input[data-testid='location-input']",
+      "input[name='location']",
+      "input[placeholder*='Location' i]"
+    ],
+    "linkedin": [
+      "input[data-testid='linkedin-input']",
+      "input[name='linkedin']",
+      "input[placeholder*='LinkedIn' i]"
+    ],
+    "github": [
+      "input[data-testid='github-input']",
+      "input[name='github']",
+      "input[placeholder*='GitHub' i]"
+    ],
+    "portfolio": [
+      "input[data-testid='portfolio-input']",
+      "input[name='portfolio']",
+      "input[placeholder*='portfolio' i]",
+      "input[placeholder*='website' i]"
+    ]
+  }
+}

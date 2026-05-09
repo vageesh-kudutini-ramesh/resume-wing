@@ -1,0 +1,145 @@
+{
+  "manifest_version": 3,
+  "name": "ResumeWing Autofill",
+  "version": "1.0.0",
+  "description": "Auto-fill job application forms using your resume data from ResumeWing.",
+
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+
+  "host_permissions": [
+    "http://localhost:8000/*",
+    "*://*.greenhouse.io/*",
+    "*://jobs.lever.co/*",
+    "*://*.myworkdayjobs.com/*",
+    "*://jobs.smartrecruiters.com/*",
+    "*://*.smartrecruiters.com/*",
+    "*://app.ashbyhq.com/*",
+    "*://jobs.ashbyhq.com/*",
+    "*://*.phenompeople.com/*",
+    "*://*.phenompro.com/*",
+    "*://*.icims.com/*",
+    "*://*.taleo.net/*",
+    "*://*.successfactors.com/*",
+    "*://*.jobvite.com/*",
+    "*://*.brassring.com/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.greenhouse.io/*",
+        "*://boards.greenhouse.io/*"
+      ],
+      "js": ["ats/common.js", "ats/smart-autofill.js", "ats/greenhouse.js", "content.js"],
+      "css": ["panel.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://jobs.lever.co/*"],
+      "js": ["ats/common.js", "ats/smart-autofill.js", "ats/lever.js", "content.js"],
+      "css": ["panel.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.myworkdayjobs.com/*"],
+      "js": ["ats/common.js", "ats/smart-autofill.js", "ats/workday.js", "content.js"],
+      "css": ["panel.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://jobs.smartrecruiters.com/*",
+        "*://*.smartrecruiters.com/*"
+      ],
+      "js": ["ats/common.js", "ats/smart-autofill.js", "ats/smartrecruiters.js", "content.js"],
+      "css": ["panel.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://app.ashbyhq.com/*",
+        "*://jobs.ashbyhq.com/*"
+      ],
+      "js": ["ats/common.js", "ats/smart-autofill.js", "ats/ashby.js", "content.js"],
+      "css": ["panel.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://*.phenompeople.com/*",
+        "*://*.phenompro.com/*"
+      ],
+      "js": ["ats/common.js", "ats/smart-autofill.js", "ats/universal.js", "content.js"],
+      "css": ["panel.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*.icims.com/*",
+        "*://*.taleo.net/*",
+        "*://*.successfactors.com/*",
+        "*://*.jobvite.com/*",
+        "*://*.brassring.com/*"
+      ],
+      "js": ["ats/common.js", "ats/smart-autofill.js", "ats/universal.js", "content.js"],
+      "css": ["panel.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*/apply",
+        "*://*/apply/*",
+        "*://*/*/apply",
+        "*://*/*/apply/*",
+        "*://*/application",
+        "*://*/application/*",
+        "*://*/*/application",
+        "*://*/*/application/*",
+        "*://*/careers",
+        "*://*/careers/*",
+        "*://*/career",
+        "*://*/career/*",
+        "*://*/job",
+        "*://*/job/*",
+        "*://*/jobs",
+        "*://*/jobs/*",
+        "*://*/positions",
+        "*://*/positions/*",
+        "*://*/position/*",
+        "*://*/role/*",
+        "*://*/roles/*",
+        "*://*/opening/*",
+        "*://*/openings/*",
+        "*://*/vacancy/*",
+        "*://*/vacancies/*"
+      ],
+      "js": ["ats/common.js", "ats/smart-autofill.js", "ats/universal.js", "content.js"],
+      "css": ["panel.css"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "action": {
+    "default_title": "ResumeWing Autofill",
+    "default_icon": {
+      "16":  "icons/icon16.png",
+      "48":  "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "icons": {
+    "16":  "icons/icon16.png",
+    "48":  "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
