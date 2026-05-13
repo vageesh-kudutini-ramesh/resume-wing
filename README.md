@@ -136,10 +136,12 @@ ResumeWing can email you the top N ranked matches for your keywords every mornin
 
 Register the task, then enable wake-from-sleep + run-if-missed (two short PowerShell commands):
 
+Replace `<REPO_PATH>` below with the absolute path to your cloned copy (e.g. `C:\Users\You\code\resume-wing`):
+
 ```powershell
 # Step 1 — register the daily 8 AM task
 schtasks /Create /TN ResumeWingDigest `
-  /TR "D:\Vageesh_Personal_Projects\resume-wing\job-app-automation\run_digest.bat" `
+  /TR "<REPO_PATH>\job-app-automation\run_digest.bat" `
   /SC DAILY /ST 08:00 /F
 
 # Step 2 — wake from sleep + run if the scheduled time was missed

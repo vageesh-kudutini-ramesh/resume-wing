@@ -8,9 +8,9 @@ setlocal
 ::  runs digest_email.py, capturing the exit code so the scheduler can show
 ::  the run as successful or failed.
 ::
-::  Register the task once with (one line):
+::  Register the task once (replace <REPO_PATH> with your local path):
 ::    schtasks /Create /TN ResumeWingDigest
-::            /TR "D:\Vageesh_Personal_Projects\resume-wing\job-app-automation\run_digest.bat"
+::            /TR "<REPO_PATH>\job-app-automation\run_digest.bat"
 ::            /SC DAILY /ST 08:00 /F
 ::
 ::  Delete it with:
