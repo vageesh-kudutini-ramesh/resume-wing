@@ -64,6 +64,26 @@ OLLAMA_MAX_PARALLEL     = int(os.getenv("OLLAMA_MAX_PARALLEL", "4"))
 MAX_JOBS_PER_BOARD   = 20
 SCRAPE_DELAY_SECONDS = 1
 
+# ── Daily digest email (optional) ──────────────────────────────────────────────
+# When configured + scheduled via Windows Task Scheduler (or cron on Mac/Linux),
+# digest_email.py runs once a day, searches the configured keywords/location,
+# scores results against the latest resume, and emails the top N matches to
+# DIGEST_EMAIL_TO. Auth uses SMTP with a Gmail App Password (requires 2FA on
+# the sender Gmail account — no OAuth, no Google Cloud project needed).
+# Leave any value blank to disable digests entirely; the rest of the app is
+# unaffected.
+DIGEST_EMAIL_TO       = os.getenv("DIGEST_EMAIL_TO", "")
+DIGEST_SMTP_HOST      = os.getenv("DIGEST_SMTP_HOST", "smtp.gmail.com")
+DIGEST_SMTP_PORT      = int(os.getenv("DIGEST_SMTP_PORT", "587"))
+DIGEST_SMTP_USER      = os.getenv("DIGEST_SMTP_USER", "")
+DIGEST_SMTP_PASSWORD  = os.getenv("DIGEST_SMTP_PASSWORD", "")
+DIGEST_KEYWORDS       = os.getenv("DIGEST_KEYWORDS", "")
+DIGEST_LOCATION       = os.getenv("DIGEST_LOCATION", "")
+DIGEST_TOP_N          = int(os.getenv("DIGEST_TOP_N", "5"))
+DIGEST_NUM_PER_BOARD  = int(os.getenv("DIGEST_NUM_PER_BOARD", "10"))
+DIGEST_MAX_AGE_DAYS   = int(os.getenv("DIGEST_MAX_AGE_DAYS", "7"))
+DIGEST_DASHBOARD_URL  = os.getenv("DIGEST_DASHBOARD_URL", "http://localhost:3000")
+
 # ── Job expiry thresholds (days) ───────────────────────────────────────────────
 # Jobs older than EXPIRY_WARN_DAYS get an orange "may be expiring" badge.
 # Jobs older than EXPIRY_HIDE_DAYS are hidden unless user opts in.

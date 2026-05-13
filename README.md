@@ -95,6 +95,167 @@ ollama pull llama3.2:3b
 
 Ollama runs as a background service on port 11434. Without it, the app gracefully falls back to deterministic templates — everything still works, just less natural-sounding.
 
+### Optional — Daily digest email
+
+ResumeWing can email you the top N ranked matches for your keywords every morning. The script reuses the same search + scoring engine the dashboard uses, filters out roles you've already applied to or were emailed previously, and ships a clean HTML digest with "View & Apply" and "Open in dashboard" buttons.
+
+**One-time setup (~5 minutes):**
+
+1. Enable 2-Factor Auth on the Gmail account you want to send *from*.
+2. Generate an App Password at [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords) — App = `Mail`, Device = `Other (ResumeWing)`. Copy the 16-character string.
+3. Add these to your `.env`:
+
+   ```env
+   DIGEST_EMAIL_TO=you@example.com
+   DIGEST_SMTP_USER=sender@gmail.com
+   DIGEST_SMTP_PASSWORD=xxxx xxxx xxxx xxxx
+   DIGEST_KEYWORDS=Software Engineer,Backend Engineer,Full Stack Engineer
+   DIGEST_LOCATION=United States,Remote
+   ```
+
+   `DIGEST_LOCATION` accepts a single value or a comma-separated list. Each value runs its own search cycle; results are deduped across cycles by URL. Heavy quota note: JSearch's free tier is 200/month, so keep `keywords × locations ≤ ~6` to stay under, or run the task 5 days/week.
+
+4. Test it manually:
+
+   ```powershell
+   # Windows
+   cd job-app-automation
+   venv\Scripts\python digest_email.py
+   ```
+
+   ```bash
+   # macOS / Linux
+   cd job-app-automation
+   chmod +x run_digest.sh
+   venv/bin/python digest_email.py
+   ```
+
+5. Once you've received a successful test email, register the daily task. The instructions below configure the scheduler to **wake the laptop from sleep** at 8 AM and **catch up if the machine was off / missed the run** when it next powers on.
+
+#### Windows — Task Scheduler
+
+Register the task, then enable wake-from-sleep + run-if-missed (two short PowerShell commands):
+
+```powershell
+# Step 1 — register the daily 8 AM task
+schtasks /Create /TN ResumeWingDigest `
+  /TR "D:\Vageesh_Personal_Projects\resume-wing\job-app-automation\run_digest.bat" `
+  /SC DAILY /ST 08:00 /F
+
+# Step 2 — wake from sleep + run if the scheduled time was missed
+$task = Get-ScheduledTask -TaskName ResumeWingDigest
+$task.Settings.WakeToRun = $true
+$task.Settings.StartWhenAvailable = $true
+$task.Settings.RestartCount = 3
+$task.Settings.RestartInterval = "PT10M"
+Set-ScheduledTask -InputObject $task
+```
+
+The same options can be toggled in the Task Scheduler GUI (`taskschd.msc`) — *Conditions → Wake the computer to run this task*, *Settings → Run task as soon as possible after a scheduled start is missed*.
+
+To check the next run time: `schtasks /Query /TN ResumeWingDigest`. To remove: `schtasks /Delete /TN ResumeWingDigest /F`.
+
+#### macOS — launchd (wakes from sleep)
+
+`launchd` is the Apple-native scheduler and is the only one that reliably wakes the Mac from sleep.
+
+1. Make the runner executable:
+
+   ```bash
+   chmod +x /full/path/to/resume-wing/job-app-automation/run_digest.sh
+   ```
+
+2. Create `~/Library/LaunchAgents/com.resumewing.digest.plist` with:
+
+   ```xml
+   <?xml version="1.0" encoding="UTF-8"?>
+   <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+   <plist version="1.0">
+   <dict>
+     <key>Label</key><string>com.resumewing.digest</string>
+     <key>ProgramArguments</key>
+     <array>
+       <string>/full/path/to/resume-wing/job-app-automation/run_digest.sh</string>
+     </array>
+     <key>StartCalendarInterval</key>
+     <dict>
+       <key>Hour</key><integer>8</integer>
+       <key>Minute</key><integer>0</integer>
+     </dict>
+     <key>RunAtLoad</key><false/>
+     <key>StandardOutPath</key><string>/tmp/resumewing-digest.out.log</string>
+     <key>StandardErrorPath</key><string>/tmp/resumewing-digest.err.log</string>
+   </dict>
+   </plist>
+   ```
+
+3. Load it (and also schedule a hardware wake event so the Mac comes out of sleep at 7:59 AM):
+
+   ```bash
+   launchctl load ~/Library/LaunchAgents/com.resumewing.digest.plist
+   sudo pmset repeat wakeorpoweron MTWRFSU 07:59:00
+   ```
+
+   `pmset repeat wakeorpoweron` powers the Mac on or wakes it from sleep daily, one minute before the launchd trigger. Verify with `pmset -g sched`.
+
+To remove: `launchctl unload ~/Library/LaunchAgents/com.resumewing.digest.plist && sudo pmset repeat cancel`.
+
+#### Linux — systemd timer (catches missed runs)
+
+systemd timers with `Persistent=true` automatically run a missed job as soon as the system comes online.
+
+1. Make the runner executable:
+
+   ```bash
+   chmod +x /full/path/to/resume-wing/job-app-automation/run_digest.sh
+   ```
+
+2. Create `~/.config/systemd/user/resumewing-digest.service`:
+
+   ```ini
+   [Unit]
+   Description=ResumeWing daily digest email
+   After=network-online.target
+   Wants=network-online.target
+
+   [Service]
+   Type=oneshot
+   ExecStart=/full/path/to/resume-wing/job-app-automation/run_digest.sh
+   ```
+
+3. Create `~/.config/systemd/user/resumewing-digest.timer`:
+
+   ```ini
+   [Unit]
+   Description=Run ResumeWing digest daily at 08:00
+
+   [Timer]
+   OnCalendar=*-*-* 08:00:00
+   Persistent=true
+   RandomizedDelaySec=2m
+
+   [Install]
+   WantedBy=timers.target
+   ```
+
+4. Enable and start the timer:
+
+   ```bash
+   systemctl --user daemon-reload
+   systemctl --user enable --now resumewing-digest.timer
+   loginctl enable-linger "$USER"   # so the timer fires even when you're not logged in
+   ```
+
+   `loginctl enable-linger` keeps user services running across logouts. For laptops, the timer naturally wakes the system if `rtcwake` is also scheduled — most distros' suspend-then-hibernate behavior handles this without extra config.
+
+To remove: `systemctl --user disable --now resumewing-digest.timer && rm ~/.config/systemd/user/resumewing-digest.{timer,service}`.
+
+#### What happens when the laptop is fully off
+
+Each scheduler above (Task Scheduler `StartWhenAvailable`, launchd + `pmset repeat`, systemd `Persistent=true`) runs the digest **as soon as the laptop next powers on**, instead of skipping the day. You may get the email at 8 AM if it wakes from sleep, or at whatever time you open the laptop if it was completely off.
+
+Leave `DIGEST_EMAIL_TO` blank to disable. Logs land in `job-app-automation/data/digest.log`.
+
 ---
 
 ## Features
