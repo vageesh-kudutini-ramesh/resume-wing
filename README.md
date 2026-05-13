@@ -5,6 +5,11 @@
 
 ---
 
+## Demo
+
+https://github.com/user-attachments/assets/085fcf01-706f-4ad3-a988-96c7b5bc3065
+
+
 ## Why ResumeWing
 
 The job-application stack today is broken in three ways:
