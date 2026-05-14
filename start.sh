@@ -58,10 +58,12 @@ if [[ ! -f "$VENV/bin/uvicorn" ]]; then
     echo ""
     echo -e "  ${RED}Virtual environment not found or incomplete.${RESET}"
     echo ""
-    echo "  Fix:"
-    echo "      cd job-app-automation"
-    echo "      python3 -m venv venv"
-    echo "      venv/bin/pip install -r requirements.txt"
+    echo "  First-time setup - run this once from the repo root:"
+    echo -e "      ${CYAN}bash setup.sh${RESET}"
+    echo ""
+    echo "  setup.sh checks your Python/Node versions, creates the venv,"
+    echo "  installs every backend and frontend dependency, and verifies"
+    echo "  the install worked."
     echo ""
     exit 1
 fi
@@ -70,12 +72,13 @@ ok "venv found at $VENV"
 
 step "2/4" "Checking Node modules..."
 if [[ ! -d "$FRONTEND/node_modules" ]]; then
-    echo "        node_modules not found â€” running npm install (first time only)..."
     echo ""
-    pushd "$FRONTEND" > /dev/null
-    npm install || fail "npm install failed. Is Node.js installed? See https://nodejs.org/"
-    popd > /dev/null
+    echo -e "  ${RED}Frontend dependencies not installed.${RESET}"
     echo ""
+    echo "  First-time setup - run this once from the repo root:"
+    echo -e "      ${CYAN}bash setup.sh${RESET}"
+    echo ""
+    exit 1
 fi
 ok "node_modules found"
 

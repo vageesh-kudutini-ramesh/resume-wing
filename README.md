@@ -55,33 +55,42 @@ Three subsystems, each in its own folder:
 
 ## Quick Start
 
-### Windows (recommended path)
+### Prerequisites (all platforms)
 
-```powershell
-# One-time
-cd job-app-automation
-python -m venv venv
-venv\Scripts\Activate.ps1
-pip install -r requirements.txt
+You need these installed on your machine **before** running setup:
 
-cd ..\frontend
-npm install
+- **Python 3.10 or higher** — [python.org/downloads](https://www.python.org/downloads/) (Windows: tick *Add Python to PATH* during install)
+- **Node.js 18 or higher** — [nodejs.org](https://nodejs.org/)
 
-# Each time you want to run the app
-cd ..
-.\START.bat
-```
+On macOS, you may also need Xcode Command-Line Tools (`xcode-select --install`). On Debian/Ubuntu Linux you'll need `sudo apt install python3-venv python3-pip python3-dev build-essential`. The setup script tells you if anything is missing.
 
-`START.bat` opens two terminal windows (backend + frontend), waits for AI models to warm up, and prints the URLs. Use `STOP.bat` to shut everything down.
+### Step 1 — one-time setup
 
-### macOS / Linux
+Open a terminal in the cloned repo folder and run **one** command for your OS:
 
-```bash
-chmod +x start.sh stop.sh
-./start.sh
-```
+| OS | Command |
+|---|---|
+| **Windows** | `.\setup.bat` |
+| **macOS / Linux** | `bash setup.sh` |
 
-### Browser extension (one-time)
+The setup script verifies your Python and Node versions, creates the Python venv cleanly, installs every backend and frontend dependency, and confirms the install actually worked. Expect it to take **3–5 minutes** the first time.
+
+If anything goes wrong, the script stops and tells you exactly what to fix.
+
+### Step 2 — run the app
+
+Once setup finishes, start the app:
+
+| OS | Command |
+|---|---|
+| **Windows** | `.\START.bat` |
+| **macOS / Linux** | `bash start.sh` |
+
+The launcher opens two terminal windows (backend on port 8000, frontend on port 3000), waits for AI models to warm up, and prints the URLs. Open **http://localhost:3000** in your browser when it's ready.
+
+To stop everything: `STOP.bat` (Windows) or `bash stop.sh` (macOS / Linux).
+
+### Step 3 — Browser extension (one-time)
 
 1. Open `edge://extensions` (or `chrome://extensions`)
 2. Toggle **Developer mode** on (top-right)

@@ -39,9 +39,12 @@ if not exist "%VENV%\uvicorn.exe" (
     echo.
     echo  ERROR: Virtual environment not found or incomplete.
     echo.
-    echo  Fix:  cd job-app-automation
-    echo        python -m venv venv
-    echo        venv\Scripts\pip install -r requirements.txt
+    echo  First-time setup - run this once from the repo root:
+    echo      .\setup.bat
+    echo.
+    echo  setup.bat checks your Python/Node versions, creates the venv,
+    echo  installs every backend and frontend dependency, and verifies
+    echo  the install worked.
     echo.
     pause
     exit /b 1
@@ -53,21 +56,14 @@ echo.
 :: ── Pre-flight: Node modules ──────────────────────────────────────────────────
 echo  [2/4] Checking Node modules...
 if not exist "%FRONTEND%\node_modules" (
-    echo         node_modules not found — running npm install (first time only)...
     echo.
-    pushd "%FRONTEND%"
-    call npm install
-    if errorlevel 1 (
-        echo.
-        echo  ERROR: npm install failed. Is Node.js installed?
-        echo  Download: https://nodejs.org/
-        echo.
-        popd
-        pause
-        exit /b 1
-    )
-    popd
+    echo  ERROR: Frontend dependencies not installed.
     echo.
+    echo  First-time setup - run this once from the repo root:
+    echo      .\setup.bat
+    echo.
+    pause
+    exit /b 1
 )
 echo         OK
 echo.
